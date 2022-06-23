@@ -25,9 +25,7 @@ public class Canario extends SerCantor{
         super(tipo, nombre, fechaNacimiento);
     }
     
-    public void setValues(String nombre){
-        this.setNombre(nombre);
-    }
+ 
     @Override
     public void cantar() {
        try {

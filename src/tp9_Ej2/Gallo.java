@@ -9,7 +9,6 @@ package tp9_Ej2;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Set;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -27,9 +26,7 @@ public class Gallo extends SerCantor{
     }
 
  
-    public void setValues(String nombre){
-        this.setNombre(nombre);
-    }
+    
     
     @Override
     public void cantar() {

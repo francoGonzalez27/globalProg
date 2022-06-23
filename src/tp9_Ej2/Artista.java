@@ -34,10 +34,11 @@ public class Artista extends SerCantor {
         this.tipoDeMusica = tipoDeMusica;
     }
     
-    public void setValues(String instrumentoNombre,String instrumentoTipo, String nombre, String banda, String tipoDeMusica){
+    public void setValues(String instrumentoNombre,String instrumentoTipo, String nombre, String banda, String tipoDeMusica, String tipoDeCantor){
         this.instrumento =  new Instrumento(instrumentoNombre,instrumentoTipo);
         this.banda = banda;
         this.setNombre(nombre);
+        this.setTipo(tipoDeCantor);
         this.tipoDeMusica = tipoDeMusica;
     }
 
