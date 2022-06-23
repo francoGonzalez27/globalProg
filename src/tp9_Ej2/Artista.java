@@ -19,27 +19,26 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 public class Artista extends SerCantor {
+    
     public Instrumento instrumento;
-    public String banda;
-    public String tipoDeMusica;
+    
+    
     public boolean hacerCantar(){
         
         return true;
     }
 
-    public Artista(String instrumentoNombre,String instrumentoTipo, String nombre, String banda, String tipoDeMusica, String tipoDeCantor, Date fechaNacimiento) {
-        super(tipoDeCantor, nombre, fechaNacimiento);
-        this.instrumento =  new Instrumento(instrumentoNombre,instrumentoTipo);
-        this.banda = banda;
-        this.tipoDeMusica = tipoDeMusica;
+    public Artista(Instrumento instrumento, String tipo, String nombre, Date fechaNacimiento, Momento momentoCantor) {
+        super(tipo, nombre, fechaNacimiento, momentoCantor);
+        this.instrumento = instrumento;
     }
+
     
-    public void setValues(String instrumentoNombre,String instrumentoTipo, String nombre, String banda, String tipoDeMusica, String tipoDeCantor){
+    
+    public void setValues(String instrumentoNombre,String instrumentoTipo, String nombre, Momento momentoCantor){
         this.instrumento =  new Instrumento(instrumentoNombre,instrumentoTipo);
-        this.banda = banda;
         this.setNombre(nombre);
-        this.setTipo(tipoDeCantor);
-        this.tipoDeMusica = tipoDeMusica;
+        this.cuando=momentoCantor;
     }
 
     @Override

@@ -34,14 +34,14 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
         NombreArtista = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         InstrumentoLabel = new javax.swing.JLabel();
-        TipoMusicaArtista = new javax.swing.JTextField();
-        tipoMusicaLabel = new javax.swing.JLabel();
-        BandaArtista = new javax.swing.JTextField();
         mostrarArtistasBtn = new javax.swing.JButton();
         DesplegableNombreInstrumento = new javax.swing.JComboBox<>();
-        BandaLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         FechaNacimientoArtista = new com.toedter.calendar.JDateChooser();
+        alegreLabel = new javax.swing.JLabel();
+        horarioLabel = new javax.swing.JLabel();
+        alegria = new javax.swing.JToggleButton();
+        horarioText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,10 +71,6 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
         InstrumentoLabel.setLabelFor(NombreArtista);
         InstrumentoLabel.setText("Instrumento");
 
-        tipoMusicaLabel.setBackground(new java.awt.Color(0, 0, 0));
-        tipoMusicaLabel.setLabelFor(NombreArtista);
-        tipoMusicaLabel.setText("Tipo De Musica");
-
         mostrarArtistasBtn.setText("Cancelar");
         mostrarArtistasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,13 +78,27 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
             }
         });
 
-        BandaLabel.setBackground(new java.awt.Color(0, 0, 0));
-        BandaLabel.setLabelFor(NombreArtista);
-        BandaLabel.setText("Banda Perteneciente");
-
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setLabelFor(NombreArtista);
         jLabel7.setText("Fecha De Nacimiento");
+
+        alegreLabel.setText("Es musica alegre?");
+
+        horarioLabel.setText("Horario");
+
+        alegria.setSelected(true);
+        alegria.setText("si");
+        alegria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alegriaActionPerformed(evt);
+            }
+        });
+
+        horarioText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                horarioTextActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelCrearArtistaLayout = new javax.swing.GroupLayout(PanelCrearArtista);
         PanelCrearArtista.setLayout(PanelCrearArtistaLayout);
@@ -103,14 +113,9 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
                                 .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(InstrumentoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tipoMusicaLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(BandaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(TipoMusicaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                                        .addComponent(BandaArtista))
                                     .addComponent(NombreArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(DesplegableNombreInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(FechaNacimientoArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -121,7 +126,16 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
                     .addGroup(PanelCrearArtistaLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCrearArtistaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(alegreLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(horarioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(alegria)
+                            .addComponent(horarioText, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         PanelCrearArtistaLayout.setVerticalGroup(
@@ -139,13 +153,13 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
                     .addComponent(DesplegableNombreInstrumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TipoMusicaArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tipoMusicaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(alegreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(alegria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BandaArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BandaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(horarioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(horarioText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelCrearArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FechaNacimientoArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -183,6 +197,14 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
     private void mostrarArtistasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarArtistasBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mostrarArtistasBtnActionPerformed
+
+    private void alegriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alegriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_alegriaActionPerformed
+
+    private void horarioTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horarioTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_horarioTextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,19 +245,19 @@ public class JFrame_CrearArtistas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField BandaArtista;
-    public javax.swing.JLabel BandaLabel;
     public javax.swing.JComboBox<String> DesplegableNombreInstrumento;
     public com.toedter.calendar.JDateChooser FechaNacimientoArtista;
     public javax.swing.JLabel InstrumentoLabel;
     public javax.swing.JTextField NombreArtista;
     public javax.swing.JPanel PanelCrearArtista;
-    public javax.swing.JTextField TipoMusicaArtista;
+    public javax.swing.JLabel alegreLabel;
+    public javax.swing.JToggleButton alegria;
     public javax.swing.JButton crearArtistaBtn;
+    public javax.swing.JLabel horarioLabel;
+    public javax.swing.JTextField horarioText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     public javax.swing.JButton mostrarArtistasBtn;
-    public javax.swing.JLabel tipoMusicaLabel;
     // End of variables declaration//GEN-END:variables
 }

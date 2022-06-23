@@ -38,8 +38,8 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
         editarArtista = new javax.swing.JButton();
         Title = new javax.swing.JLabel();
         InstrumentoArtista = new javax.swing.JLabel();
-        TipoMusicaArtista = new javax.swing.JLabel();
-        BandaArtista = new javax.swing.JLabel();
+        esMusicaAlegre = new javax.swing.JLabel();
+        horario = new javax.swing.JLabel();
         NombreArtista = new javax.swing.JLabel();
         FechaDeNacimientoArtista = new javax.swing.JLabel();
         ReproducirSon = new javax.swing.JButton();
@@ -132,11 +132,11 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
         InstrumentoArtista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         InstrumentoArtista.setText("Instrumento");
 
-        TipoMusicaArtista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        TipoMusicaArtista.setText("Tipo De Musica");
+        esMusicaAlegre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        esMusicaAlegre.setText("Es musica alegre?");
 
-        BandaArtista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BandaArtista.setText("Banda");
+        horario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        horario.setText("horario");
 
         NombreArtista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         NombreArtista.setText("Nombre Artista");
@@ -162,9 +162,9 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ReproducirSon, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelDataArtistaLayout.createSequentialGroup()
-                        .addComponent(TipoMusicaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(esMusicaAlegre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(123, 123, 123))
-                    .addComponent(BandaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(horario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(NombreArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(FechaDeNacimientoArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -185,9 +185,9 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
                     .addComponent(InstrumentoArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                     .addComponent(ReproducirSon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TipoMusicaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(esMusicaAlegre, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BandaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addComponent(horario, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(FechaDeNacimientoArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addGap(79, 79, 79)
@@ -271,7 +271,6 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JList<String> ArtistasContainer;
-    public javax.swing.JLabel BandaArtista;
     public javax.swing.JLabel FechaDeNacimientoArtista;
     public javax.swing.JButton InfoArtistaBtn;
     public javax.swing.JLabel InstrumentoArtista;
@@ -279,12 +278,13 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
     public javax.swing.JPanel PanelCrearArtista;
     public javax.swing.JPanel PanelDataArtista;
     public javax.swing.JButton ReproducirSon;
-    public javax.swing.JLabel TipoMusicaArtista;
     private javax.swing.JLabel Title;
     private javax.swing.ButtonGroup buttonGroup1;
     public javax.swing.JButton crearArtistaBtn;
     public javax.swing.JButton editarArtista;
     public javax.swing.JButton eliminarArtistaBtn;
+    public javax.swing.JLabel esMusicaAlegre;
+    public javax.swing.JLabel horario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

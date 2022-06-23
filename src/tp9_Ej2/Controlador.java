@@ -207,20 +207,16 @@ public class Controlador{
         this.mostrarArtistas.setVisible(false);
         this.crearArtistas.setVisible(true);
         if(tipoCantor == "Gallo" || tipoCantor == "Canario"){
-            
-            this.crearArtistas.TipoMusicaArtista.setVisible(false);
-            this.crearArtistas.BandaArtista.setVisible(false);
             this.crearArtistas.DesplegableNombreInstrumento.setVisible(false);
             this.crearArtistas.InstrumentoLabel.setVisible(false);
-            this.crearArtistas.tipoMusicaLabel.setVisible(false);
-            this.crearArtistas.BandaLabel.setVisible(false);
+          
         }else   {
-            this.crearArtistas.TipoMusicaArtista.setVisible(true);
-            this.crearArtistas.BandaArtista.setVisible(true);
             this.crearArtistas.DesplegableNombreInstrumento.setVisible(true);
             this.crearArtistas.InstrumentoLabel.setVisible(true);
-            this.crearArtistas.tipoMusicaLabel.setVisible(true);
-            this.crearArtistas.BandaLabel.setVisible(true);
+            this.crearArtistas.alegreLabel.setVisible(true);
+            this.crearArtistas.alegria.setVisible(true);
+            this.crearArtistas.horarioLabel.setVisible(true);
+            this.crearArtistas.horarioText.setVisible(true);
         }
         this.crearArtistas.NombreArtista.setText(artista==null? "":artista.getNombre());
         if (artista != null) {
@@ -228,10 +224,9 @@ public class Controlador{
         }
         TextPrompt placeholderNombreArtista = new TextPrompt("Juan,Pepe,Rodrigo...", this.crearArtistas.NombreArtista);
         placeholderNombreArtista.changeAlpha(0.75f);
-        TextPrompt placeholderTipoMusicaArtista = new TextPrompt("Jazz,Regueton,Tango...", this.crearArtistas.TipoMusicaArtista);
+        TextPrompt placeholderTipoMusicaArtista = new TextPrompt("mañana, tarde, noche, madrugada..", this.crearArtistas.horarioText);
         placeholderTipoMusicaArtista.changeAlpha(0.75f);
-        TextPrompt placeholderBandaArtista = new TextPrompt("Solista,OrejaDeVango,OneDirection...", this.crearArtistas.BandaArtista);
-        placeholderBandaArtista.changeAlpha(0.75f);
+     
         
     }
     public void CambiarAMostrarArtista(){
@@ -245,13 +240,13 @@ public class Controlador{
     public void CrearArtista(Boolean editandoArtis,String tipoDeArtista){
         String nombre = this.crearArtistas.NombreArtista.getText();
         Date fechaNacimiento = this.crearArtistas.FechaNacimientoArtista.getDate();
-        String tipoMusica = "";
-        String banda = "";
+        boolean alegria=true;
+        String horario = "";
         String instrumentoNombre = "";
         String instrumentoTipo = "";
         if("Artista".equals(tipoDeArtista)){
-            tipoMusica = this.crearArtistas.TipoMusicaArtista.getText();
-            banda = this.crearArtistas.BandaArtista.getText();
+            alegria = this.crearArtistas.alegria.isSelected();
+            horario = this.crearArtistas.horarioText.getText();
             instrumentoNombre = this.instrumentos[this.crearArtistas.DesplegableNombreInstrumento.getSelectedIndex()][0];
             instrumentoTipo = this.instrumentos[this.crearArtistas.DesplegableNombreInstrumento.getSelectedIndex()][1];
         }
@@ -259,38 +254,39 @@ public class Controlador{
         if(nombre.length()>0) nombre = nombre.substring(0,1).toUpperCase() + nombre.substring(1);
         else return;
         if ("Artista".equals(tipoDeArtista)){
-            if(tipoMusica.length()>0) tipoMusica = tipoMusica.substring(0,1).toUpperCase() + tipoMusica.substring(1);
-            else return;
-            if(banda.length()>0) banda = banda.substring(0,1).toUpperCase() + banda.substring(1);
+            if(horario.length()>0) horario = horario.substring(0,1).toUpperCase() + horario.substring(1);
             else return;
         }
+        Momento momentoCantor= new Momento(horario,alegria);
+        
         if(editandoArtis){
             //.println("Editando Artista");
-            if ("Artista".equals(tipoDeArtista)){
-                this.artistasArray.get(indexCantorEditandose).setValues(instrumentoNombre,instrumentoTipo,nombre,banda, tipoMusica);
+            if ("Artista".equals(tipoDeArtista)){ 
+                this.artistasArray.get(indexCantorEditandose).setValues(instrumentoNombre,instrumentoTipo,nombre,momentoCantor);
 
             }
             else if("Gallo".equals(tipoDeArtista)){
-                this.gallosArray.get(indexCantorEditandose).setValues(nombre);
+                this.gallosArray.get(indexCantorEditandose).setValues(nombre,momentoCantor);
 
             }
             else if("Canario".equals(tipoDeArtista)){
-                this.canariosArray.get(indexCantorEditandose).setValues(nombre);
+                this.canariosArray.get(indexCantorEditandose).setValues(nombre,momentoCantor);
 
             }
             
             //.println("lastIndex "+LastIndex);
         }else{
             if ("Artista".equals(tipoDeArtista)){
-                Artista newArtista = new Artista(instrumentoNombre,instrumentoTipo,nombre,banda, tipoMusica,tipoDeArtista,fechaNacimiento);
+                Instrumento instrumentoCantor =new Instrumento(instrumentoNombre,instrumentoTipo);
+                Artista newArtista = new Artista(instrumentoCantor,tipoDeArtista,nombre,fechaNacimiento,momentoCantor);
                 artistasArray.add(newArtista);
             }
             else if("Gallo".equals(tipoDeArtista)){
-                Gallo newGallo = new Gallo(tipoDeArtista,nombre,fechaNacimiento);
+                Gallo newGallo = new Gallo(tipoDeArtista,nombre,fechaNacimiento,momentoCantor);
                 gallosArray.add(newGallo);
             }
             else if("Canario".equals(tipoDeArtista)){
-                Canario newCanario = new Canario(tipoDeArtista,nombre,fechaNacimiento);
+                Canario newCanario = new Canario(tipoDeArtista,nombre,fechaNacimiento,momentoCantor);
                 canariosArray.add(newCanario);
             }
             
@@ -303,26 +299,50 @@ public class Controlador{
     
     public void MostrarInfoArtista(){
         indexCantorEditandose = this.mostrarArtistas.ArtistasContainer.getSelectedIndex();
-        //.println(indexCantorEditandose);
+        System.out.println(indexCantorEditandose+" index cantor editandoce");
+        System.out.println(cantoresArray.length+" logitd array");
+        
         if(indexCantorEditandose==-1) return;
         if(cantoresArray[indexCantorEditandose][1] == "Artista"){
             this.artistaSeleccionado = this.artistasArray.get(indexCantorEditandose);
             this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
         }
         else if(cantoresArray[indexCantorEditandose][1] == "Gallo"){
-            this.galloSeleccionado = this.gallosArray.get(indexCantorEditandose - this.artistasArray.size());
+            System.out.println("entre");
+            this.galloSeleccionado = this.gallosArray.get(indexCantorEditandose - (this.artistasArray.size()));
             this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
         }
         else if(cantoresArray[indexCantorEditandose][1] == "Canario"){
-            this.canarioSeleccionado = this.canariosArray.get(indexCantorEditandose - this.artistasArray.size() - this.gallosArray.size());
+            this.canarioSeleccionado = this.canariosArray.get(indexCantorEditandose - (this.artistasArray.size()-1) - (this.gallosArray.size()-1));
             this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
         }
+        System.out.println(tipoCantorEditandose+" tipo cantor");
+        switch(tipoCantorEditandose){
+            case "Artista":
+                this.mostrarArtistas.NombreArtista.setText("Nombre: " + artistaSeleccionado.getNombre());
+                this.mostrarArtistas.InstrumentoArtista.setVisible(true);
+                this.mostrarArtistas.InstrumentoArtista.setText("Intrumento: " + artistaSeleccionado.instrumento.nombre + ", es de: "+artistaSeleccionado.instrumento.tipo);
+                this.mostrarArtistas.esMusicaAlegre.setText(artistaSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.horario.setText(artistaSeleccionado.cuando.horario());
+                this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(artistaSeleccionado.Calcular_edad()) );
+                break;
+            case "Gallo":
+                this.mostrarArtistas.NombreArtista.setText("Nombre: " + galloSeleccionado.getNombre());
+                this.mostrarArtistas.InstrumentoArtista.setVisible(false);
+                this.mostrarArtistas.esMusicaAlegre.setText(galloSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.horario.setText(galloSeleccionado.cuando.horario());
+                this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(galloSeleccionado.Calcular_edad()) );
+                break;
+            case "Canario":
+                this.mostrarArtistas.NombreArtista.setText("Nombre: " + canarioSeleccionado.getNombre());
+                this.mostrarArtistas.InstrumentoArtista.setVisible(false);
+                this.mostrarArtistas.esMusicaAlegre.setText(canarioSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.horario.setText(canarioSeleccionado.cuando.horario());
+                this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(canarioSeleccionado.Calcular_edad()) );
+                break;
+        }
         
-        this.mostrarArtistas.NombreArtista.setText("Nombre: " + artistaSeleccionado.getNombre());
-        this.mostrarArtistas.InstrumentoArtista.setText("Intrumento: " + artistaSeleccionado.instrumento.nombre + ", es de: "+artistaSeleccionado.instrumento.tipo);
-        this.mostrarArtistas.TipoMusicaArtista.setText("Tipo De Musica: " + artistaSeleccionado.tipoDeMusica);
-        this.mostrarArtistas.BandaArtista.setText("Banda: " + artistaSeleccionado.banda);
-        this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(artistaSeleccionado.Calcular_edad()) );
+        
         this.mostrarArtistas.PanelDataArtista.setVisible(true);
     }
     

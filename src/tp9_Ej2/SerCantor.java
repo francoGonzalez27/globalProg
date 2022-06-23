@@ -24,11 +24,14 @@ public abstract class SerCantor implements PuedeCantar{
     private final Date fechaNacimiento;
     public Momento cuando;
 
-    public SerCantor(String tipo, String nombre, Date fechaNacimiento) {
+    public SerCantor(String tipo, String nombre, Date fechaNacimiento, Momento cuando) {
         this.tipo = tipo;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
+        this.cuando = cuando;
     }
+
+   
     
     public int Calcular_edad(){
         int edad = 0;

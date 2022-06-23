@@ -21,8 +21,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Canario extends SerCantor{
 
-    public Canario(String tipo, String nombre, Date fechaNacimiento) {
-        super(tipo, nombre, fechaNacimiento);
+    public Canario(String tipo, String nombre, Date fechaNacimiento, Momento cuando) {
+        super(tipo, nombre, fechaNacimiento, cuando);
+    }
+
+     public void setValues(String nombre, Momento momentoCantor){
+        this.setNombre(nombre);
+        this.cuando=momentoCantor;
     }
     
  

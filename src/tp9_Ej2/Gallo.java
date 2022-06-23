@@ -21,8 +21,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Gallo extends SerCantor{
 
-    public Gallo(String tipo, String nombre, Date fechaNacimiento) {
-        super(tipo, nombre, fechaNacimiento);
+    public Gallo(String tipo, String nombre, Date fechaNacimiento, Momento cuando) {
+        super(tipo, nombre, fechaNacimiento, cuando);
+    }
+
+    public void setValues(String nombre, Momento momentoCantor){
+        this.setNombre(nombre);
+        this.cuando=momentoCantor;
     }
 
  
