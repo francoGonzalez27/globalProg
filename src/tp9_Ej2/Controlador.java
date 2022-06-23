@@ -29,7 +29,7 @@ public class Controlador{
     private final JFrame_MostrarArtistas mostrarArtistas;
     private final JFrame_TipoDeCantor tipoDeCantor;
     public int LastIndex = 0;
-    public String[][] cantoresArray;
+    public ArrayList<String> tipoCantoresArray = new ArrayList();
     public ArrayList<Artista> artistasArray = new ArrayList();
     public ArrayList<Gallo> gallosArray = new ArrayList();
     public ArrayList<Canario> canariosArray = new ArrayList();
@@ -39,7 +39,7 @@ public class Controlador{
     
     public Integer indexCantorEditandose;
     public String tipoCantorEditandose;
-    public String tipoDeArtistaCrear;
+    public String tipoDeArtistaCrear = "Artista";
     public String[][] instrumentos = new String[10][2]; 
     
     public ActionListener editarArtista = new ActionListener() {
@@ -57,13 +57,13 @@ public class Controlador{
     public  ActionListener continuarCreacion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                continuarCreacion(null);
+                continuarCreacion(false);
             }
     };
     public  ActionListener continuarEdicion = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                continuarCreacion(artistaSeleccionado);
+                continuarCreacion(true);
             }
     };
     public Controlador(JFrame_CrearArtistas crearArtistas, JFrame_MostrarArtistas mostrarArtistas, JFrame_TipoDeCantor tipoDeCantor) {
@@ -72,13 +72,9 @@ public class Controlador{
         this.tipoDeCantor = tipoDeCantor;
         
         this.mostrarArtistas.crearArtistaBtn.addActionListener((ActionEvent e) -> {
-            this.tipoDeCantor.SiguienteBotton.removeActionListener(continuarCreacion);
-            this.tipoDeCantor.SiguienteBotton.removeActionListener(continuarEdicion);
-            this.TipoDeArtista();
-            this.tipoDeCantor.SiguienteBotton.addActionListener(continuarCreacion);
+            continuarCreacion( false);
             //CambiarACrearArtista(null); 
         });
-        this.tipoDeCantor.SiguienteBotton.addActionListener(continuarCreacion);
         this.mostrarArtistas.InfoArtistaBtn.addActionListener((ActionEvent e) -> {
             MostrarInfoArtista(); 
         });
@@ -96,6 +92,9 @@ public class Controlador{
              }else{
                  JOptionPane.showMessageDialog(null,"no se puede escuchar la cancion");
              }
+        });
+        this.crearArtistas.DesplegableTipoArtista.addActionListener((ActionEvent e) -> {
+            GuardarTipoArtista();
         });
         this.mostrarArtistas.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.mostrarArtistas.addWindowListener(new WindowAdapter() {
@@ -116,22 +115,6 @@ public class Controlador{
                 exitProcedure();
             }
         });
-        
-        this.tipoDeCantor.CanarioToggle.addActionListener((ActionEvent e) -> {
-            this.tipoDeCantor.ArtistaToggle.setSelected(false);
-            this.tipoDeCantor.GalloToggle.setSelected(false);
-            tipoDeArtistaCrear = "Canario";
-        });
-        this.tipoDeCantor.ArtistaToggle.addActionListener((ActionEvent e) -> {
-            this.tipoDeCantor.CanarioToggle.setSelected(false);
-            this.tipoDeCantor.GalloToggle.setSelected(false);
-            tipoDeArtistaCrear = "Artista";
-        });
-        this.tipoDeCantor.GalloToggle.addActionListener((ActionEvent e) -> {
-            this.tipoDeCantor.ArtistaToggle.setSelected(false);
-            this.tipoDeCantor.CanarioToggle.setSelected(false);
-            tipoDeArtistaCrear = "Gallo";
-        });
     }
 
     
@@ -151,20 +134,38 @@ public class Controlador{
         this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
     }
     
-    public void TipoDeArtista(){
-            
-        this.tipoDeCantor.setVisible(true);
+    public void GuardarTipoArtista(){
+        int id = this.crearArtistas.DesplegableTipoArtista.getSelectedIndex();
+        switch (id) {
+            case 0:
+                tipoDeArtistaCrear = "Artista";
+                break;
+            case 1:
+                tipoDeArtistaCrear = "Gallo";
+                break;
+            case 2:
+                tipoDeArtistaCrear = "Canario";
+                break;
+            default:
+                break;
+        }
+        if(tipoDeArtistaCrear == "Gallo" || tipoDeArtistaCrear == "Canario"){
+            this.crearArtistas.DesplegableNombreInstrumento.setVisible(false);
+            this.crearArtistas.InstrumentoLabel.setVisible(false);
+          
+        }else   {
+            this.crearArtistas.DesplegableNombreInstrumento.setVisible(true);
+            this.crearArtistas.InstrumentoLabel.setVisible(true);
+        }
     }
     
-    public void continuarCreacion(Artista artista){
+    public void continuarCreacion(boolean editando){
         this.tipoDeCantor.setVisible(false);
-        CambiarACrearArtista(artista,tipoDeArtistaCrear);
+        CambiarACrearArtista(tipoDeArtistaCrear,editando);
     }
     
-    public void CambiarACrearArtista(Artista artista,String tipoCantor){
+    public void CambiarACrearArtista(String tipoCantor,boolean editando){
         
-        if (tipoCantor == null) tipoCantor = "Artista";
-        System.out.println(tipoCantor);
         instrumentos[0][0] = "Voz";instrumentos[0][1] = "Viento";
         instrumentos[1][0] = "Guitarra";instrumentos[1][1] = "Cuerda";
         instrumentos[2][0] = "Piano";instrumentos[2][1] = "Cuerda";
@@ -184,19 +185,14 @@ public class Controlador{
         
         
         int e = 0;
-        if(artista != null){
+        if(editando){
             
             this.crearArtistas.crearArtistaBtn.removeActionListener(editarArtista);
             this.crearArtistas.crearArtistaBtn.removeActionListener(crearArtista);
             this.crearArtistas.crearArtistaBtn.addActionListener(editarArtista);
             //System.out.println("CantidadActionListeners: "+this.crearArtistas.crearArtistaBtn.getActionListeners().length);
             
-            for (int i = 0; i < this.instrumentos.length; i++) {
-                if(this.instrumentos[i][0] == artista.instrumento.nombre){
-                    e = i;
-                    break;
-                }
-            }
+            
         }else{
            
             this.crearArtistas.crearArtistaBtn.removeActionListener(crearArtista);
@@ -206,22 +202,48 @@ public class Controlador{
         } 
         this.mostrarArtistas.setVisible(false);
         this.crearArtistas.setVisible(true);
-        if(tipoCantor == "Gallo" || tipoCantor == "Canario"){
-            this.crearArtistas.DesplegableNombreInstrumento.setVisible(false);
-            this.crearArtistas.InstrumentoLabel.setVisible(false);
-          
-        }else   {
-            this.crearArtistas.DesplegableNombreInstrumento.setVisible(true);
-            this.crearArtistas.InstrumentoLabel.setVisible(true);
-            this.crearArtistas.alegreLabel.setVisible(true);
-            this.crearArtistas.alegria.setVisible(true);
-            this.crearArtistas.horarioLabel.setVisible(true);
-            this.crearArtistas.horarioText.setVisible(true);
+        
+        if(editando){
+            switch (tipoCantor) {
+            case "Artista":
+                for (int i = 0; i < this.instrumentos.length; i++) {
+                        if(this.instrumentos[i][0] == artistaSeleccionado.instrumento.nombre){
+                            e = i;
+                            break;
+                        }
+                    }
+                this.crearArtistas.NombreArtista.setText(artistaSeleccionado.getNombre());
+                this.crearArtistas.FechaNacimientoArtista.setDate(artistaSeleccionado.getFechaNacimiento());
+                
+                this.crearArtistas.horarioText.setText(artistaSeleccionado.cuando.horario());
+                this.crearArtistas.alegria.setSelected(artistaSeleccionado.cuando.isAlegria());
+                break;
+            case "Gallo":
+                this.crearArtistas.NombreArtista.setText(galloSeleccionado.getNombre());
+                this.crearArtistas.FechaNacimientoArtista.setDate(galloSeleccionado.getFechaNacimiento());
+                
+                this.crearArtistas.horarioText.setText(galloSeleccionado.cuando.horario());
+                this.crearArtistas.alegria.setSelected(galloSeleccionado.cuando.isAlegria());
+                break;
+            case "Canario":
+                this.crearArtistas.NombreArtista.setText(canarioSeleccionado.getNombre());
+                this.crearArtistas.FechaNacimientoArtista.setDate(canarioSeleccionado.getFechaNacimiento());
+                
+                this.crearArtistas.horarioText.setText(canarioSeleccionado.cuando.horario());
+                this.crearArtistas.alegria.setSelected(canarioSeleccionado.cuando.isAlegria());
+                break;
+            default:
+                throw new AssertionError();
+            }
+        }else{
+            this.crearArtistas.NombreArtista.setText(null);
+            this.crearArtistas.FechaNacimientoArtista.setDate(null);
+            this.crearArtistas.horarioText.setText(null);
+            this.crearArtistas.alegria.setSelected(true);
         }
-        this.crearArtistas.NombreArtista.setText(artista==null? "":artista.getNombre());
-        if (artista != null) {
-            this.crearArtistas.FechaNacimientoArtista.setDate(artista.getFechaNacimiento());
-        }
+        
+        
+        
         TextPrompt placeholderNombreArtista = new TextPrompt("Juan,Pepe,Rodrigo...", this.crearArtistas.NombreArtista);
         placeholderNombreArtista.changeAlpha(0.75f);
         TextPrompt placeholderTipoMusicaArtista = new TextPrompt("mañana, tarde, noche, madrugada..", this.crearArtistas.horarioText);
@@ -240,23 +262,21 @@ public class Controlador{
     public void CrearArtista(Boolean editandoArtis,String tipoDeArtista){
         String nombre = this.crearArtistas.NombreArtista.getText();
         Date fechaNacimiento = this.crearArtistas.FechaNacimientoArtista.getDate();
-        boolean alegria=true;
-        String horario = "";
+        boolean alegria = this.crearArtistas.alegria.isSelected();
+        String  horario = this.crearArtistas.horarioText.getText();
         String instrumentoNombre = "";
         String instrumentoTipo = "";
+        System.out.println(tipoDeArtista);
         if("Artista".equals(tipoDeArtista)){
-            alegria = this.crearArtistas.alegria.isSelected();
-            horario = this.crearArtistas.horarioText.getText();
+            
             instrumentoNombre = this.instrumentos[this.crearArtistas.DesplegableNombreInstrumento.getSelectedIndex()][0];
             instrumentoTipo = this.instrumentos[this.crearArtistas.DesplegableNombreInstrumento.getSelectedIndex()][1];
         }
-        System.out.println(fechaNacimiento);
         if(nombre.length()>0) nombre = nombre.substring(0,1).toUpperCase() + nombre.substring(1);
         else return;
-        if ("Artista".equals(tipoDeArtista)){
-            if(horario.length()>0) horario = horario.substring(0,1).toUpperCase() + horario.substring(1);
-            else return;
-        }
+        if(horario.length()>0) horario = horario.substring(0,1).toUpperCase() + horario.substring(1);
+        else return;
+        
         Momento momentoCantor= new Momento(horario,alegria);
         
         if(editandoArtis){
@@ -299,46 +319,59 @@ public class Controlador{
     
     public void MostrarInfoArtista(){
         indexCantorEditandose = this.mostrarArtistas.ArtistasContainer.getSelectedIndex();
-        System.out.println(indexCantorEditandose+" index cantor editandoce");
-        System.out.println(cantoresArray.length+" logitd array");
-        
+        //System.out.println("/////////");
+        //System.out.println(indexCantorEditandose);
         if(indexCantorEditandose==-1) return;
-        if(cantoresArray[indexCantorEditandose][1] == "Artista"){
+        //System.out.println(tipoCantoresArray.get(indexCantorEditandose));
+        
+        
+        if(tipoCantoresArray.get(indexCantorEditandose) == "Artista"){
+            //System.out.println(indexCantorEditandose+" index cantor editandoce");
+            //System.out.println(artistasArray.size()+" logitd array");
             this.artistaSeleccionado = this.artistasArray.get(indexCantorEditandose);
-            this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
+            this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
-        else if(cantoresArray[indexCantorEditandose][1] == "Gallo"){
-            System.out.println("entre");
-            this.galloSeleccionado = this.gallosArray.get(indexCantorEditandose - (this.artistasArray.size()));
-            this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
+        else if(tipoCantoresArray.get(indexCantorEditandose) == "Gallo"){
+            //System.out.println(gallosArray.size()+" logitd array");
+            int index = indexCantorEditandose - this.artistasArray.size();
+            //System.out.println(index+" index");
+            this.galloSeleccionado = this.gallosArray.get(index);
+            this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
-        else if(cantoresArray[indexCantorEditandose][1] == "Canario"){
-            this.canarioSeleccionado = this.canariosArray.get(indexCantorEditandose - (this.artistasArray.size()-1) - (this.gallosArray.size()-1));
-            this.tipoCantorEditandose = cantoresArray[indexCantorEditandose][1];
+        else if(tipoCantoresArray.get(indexCantorEditandose) == "Canario"){
+            //System.out.println(indexCantorEditandose - (this.artistasArray.size()) - (this.gallosArray.size())+" index cantor editandoce");
+            int index = indexCantorEditandose - this.artistasArray.size() - this.gallosArray.size();
+            //System.out.println(canariosArray.size()+" logitd array");
+            //System.out.println(index+" index");
+            this.canarioSeleccionado = this.canariosArray.get(index);
+            this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
-        System.out.println(tipoCantorEditandose+" tipo cantor");
+        this.mostrarArtistas.Title.setText("Info de " + this.tipoCantorEditandose);
         switch(tipoCantorEditandose){
             case "Artista":
                 this.mostrarArtistas.NombreArtista.setText("Nombre: " + artistaSeleccionado.getNombre());
                 this.mostrarArtistas.InstrumentoArtista.setVisible(true);
                 this.mostrarArtistas.InstrumentoArtista.setText("Intrumento: " + artistaSeleccionado.instrumento.nombre + ", es de: "+artistaSeleccionado.instrumento.tipo);
-                this.mostrarArtistas.esMusicaAlegre.setText(artistaSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.esMusicaAlegre.setText(artistaSeleccionado.cuando.isAlegria() == true ?"Su musica es alegre":"Su musica no es alegre");
                 this.mostrarArtistas.horario.setText(artistaSeleccionado.cuando.horario());
                 this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(artistaSeleccionado.Calcular_edad()) );
+                this.mostrarArtistas.ReproducirSon.setVisible(true);
                 break;
             case "Gallo":
                 this.mostrarArtistas.NombreArtista.setText("Nombre: " + galloSeleccionado.getNombre());
                 this.mostrarArtistas.InstrumentoArtista.setVisible(false);
-                this.mostrarArtistas.esMusicaAlegre.setText(galloSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.esMusicaAlegre.setText(galloSeleccionado.cuando.isAlegria() == true ?"Su musica es alegre":"Su musica no es alegre");
                 this.mostrarArtistas.horario.setText(galloSeleccionado.cuando.horario());
                 this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(galloSeleccionado.Calcular_edad()) );
+                this.mostrarArtistas.ReproducirSon.setVisible(false);
                 break;
             case "Canario":
                 this.mostrarArtistas.NombreArtista.setText("Nombre: " + canarioSeleccionado.getNombre());
                 this.mostrarArtistas.InstrumentoArtista.setVisible(false);
-                this.mostrarArtistas.esMusicaAlegre.setText(canarioSeleccionado.cuando.isAlegria()?"la musica es alegre":"la musica no es alegre");
+                this.mostrarArtistas.esMusicaAlegre.setText(canarioSeleccionado.cuando.isAlegria() == true ?"Su musica es alegre":"Su musica no es alegre");
                 this.mostrarArtistas.horario.setText(canarioSeleccionado.cuando.horario());
                 this.mostrarArtistas.FechaDeNacimientoArtista.setText( "Edad: " + String.valueOf(canarioSeleccionado.Calcular_edad()) );
+                this.mostrarArtistas.ReproducirSon.setVisible(false);
                 break;
         }
         
@@ -348,36 +381,28 @@ public class Controlador{
     
     
     public void EditarArtista(){
-        this.tipoDeCantor.SiguienteBotton.removeActionListener(continuarCreacion);
-        this.tipoDeCantor.SiguienteBotton.removeActionListener(continuarEdicion);
-        this.TipoDeArtista();
-        this.tipoDeCantor.SiguienteBotton.addActionListener(continuarEdicion);
+        continuarCreacion(true);
     }
     
     public String[] RecargarArtistas(){
         
         Integer dimensionArray = this.artistasArray.size()+this.gallosArray.size()+this.canariosArray.size();
-        System.out.println(dimensionArray);
-        cantoresArray = new String[dimensionArray][2];
         String arrayList[] = new String[dimensionArray];
-        
+        tipoCantoresArray.clear();
         int i,j,e,indexArrayList = 0;
         for (i = 0; i < this.artistasArray.size(); i++) {
             arrayList[indexArrayList] = this.artistasArray.get(i).getNombre();
-            cantoresArray[i][0]= this.artistasArray.get(i).getNombre();
-            cantoresArray[i][1]= this.artistasArray.get(i).getTipo();
+            tipoCantoresArray.add(this.artistasArray.get(i).getTipo());
             indexArrayList++;
         }
         for (j = 0; j < this.gallosArray.size(); j++) {
             arrayList[indexArrayList] = this.gallosArray.get(j).getNombre();
-            cantoresArray[j][0]= this.gallosArray.get(j).getNombre();
-            cantoresArray[j][1]= this.gallosArray.get(j).getTipo();
+            tipoCantoresArray.add(this.gallosArray.get(j).getTipo());
             indexArrayList++;
         }
         for (e = 0; e < this.canariosArray.size(); e++) {
             arrayList[indexArrayList] = this.canariosArray.get(e).getNombre();
-            cantoresArray[e][0]= this.canariosArray.get(e).getNombre();
-            cantoresArray[e][1]= this.canariosArray.get(e).getTipo();
+            tipoCantoresArray.add(this.canariosArray.get(e).getTipo());
             indexArrayList++;
         }
         return arrayList;
@@ -385,9 +410,30 @@ public class Controlador{
     public void EliminarArtista(){
         int value = JOptionPane.showConfirmDialog(null,"Desea Borrar El Artista?");
         if(value == 0){
-            this.artistasArray.remove(this.artistasArray.get(indexCantorEditandose));
-            this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
-            //System.out.println("new Length: "+this.artistasArray.size());
+            switch (this.tipoCantorEditandose) {
+                case "Artista":
+                    this.artistasArray.remove(this.artistasArray.get(indexCantorEditandose));
+                    this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
+                    break;
+                case "Gallo":
+                    this.gallosArray.remove(this.gallosArray.get(this.artistasArray.size() > 0 ?
+                        indexCantorEditandose - (this.artistasArray.size()) 
+                        : indexCantorEditandose));
+                    this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
+                    break;
+                case "Canario":
+                    this.canariosArray.remove(this.canariosArray.get(
+                    this.artistasArray.size() > 0 ?
+                        this.gallosArray.size() > 0 ?
+                            indexCantorEditandose - this.artistasArray.size() - this.gallosArray.size()
+                            : indexCantorEditandose - this.artistasArray.size()
+                    :indexCantorEditandose));
+                    this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            
             this.mostrarArtistas.PanelDataArtista.setVisible(false);
         }
         
