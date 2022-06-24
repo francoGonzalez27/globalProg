@@ -10,12 +10,19 @@ package tp9_Ej2;
  */
 
 import java.applet.AudioClip;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
 
 public class Artista extends SerCantor {
@@ -43,8 +50,16 @@ public class Artista extends SerCantor {
 
     @Override
     public void cantar() {
-        AudioClip sonido;
-      sonido = java.applet.Applet.newAudioClip(getClass().getResource("/sonidos/voz"));
+       try {
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sonidos/voz.wav").getAbsoluteFile());
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
+        
+       } catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex){
+           System.out.println("se produjo un error en el sonido del canario");
+           System.out.println(ex);
+       }
       
     }
 }

@@ -5,6 +5,7 @@
  */
 package tp9_Ej2;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author frank
  */
-public abstract class SerCantor implements PuedeCantar{
+public abstract class SerCantor implements PuedeCantar,Serializable{
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     private String tipo;
     private String nombre;
@@ -82,8 +83,9 @@ public abstract class SerCantor implements PuedeCantar{
     
     
     public abstract void cantar();
+    
     public void hacerCantar(SerCantor canta){
-        
+        canta.cantar();
     }
     
     

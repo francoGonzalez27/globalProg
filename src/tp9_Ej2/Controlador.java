@@ -10,7 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +41,7 @@ public class Controlador{
     public Artista artistaSeleccionado;
     public Gallo galloSeleccionado;
     public Canario canarioSeleccionado;
-    
+   
     public Integer indexCantorEditandose;
     public String tipoCantorEditandose;
     public String tipoDeArtistaCrear = "Artista";
@@ -103,6 +108,24 @@ public class Controlador{
                 exitProcedure();
             }
         });
+         this.mostrarArtistas.CantarArtistaBoton.addActionListener((ActionEvent e) -> {
+             switch(this.tipoCantorEditandose){
+                 case"Artista":
+                     System.out.println("hacer cantar artista");
+                     this.artistaSeleccionado.hacerCantar(artistaSeleccionado);
+                     break;
+                 case"Gallo":
+                     System.out.println("hacer cantar gallo");
+                     this.galloSeleccionado.hacerCantar(galloSeleccionado);
+                     break;
+                 case"Canario":
+                     System.out.println("hacer cantar canario");
+                     this.canarioSeleccionado.hacerCantar(canarioSeleccionado);
+                     break;
+                 
+             }
+            
+        });
         
         
         this.crearArtistas.mostrarArtistasBtn.addActionListener((ActionEvent e) -> {
@@ -117,20 +140,71 @@ public class Controlador{
         });
     }
 
-    
+    public void guardar(java.util.ArrayList artista,java.util.ArrayList gallo,java.util.ArrayList canario) throws FileNotFoundException,IOException{
+            File fileName = new File("Artista.txt");
+            ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(fileName));
+            salida.writeObject(artista);
+            salida.flush();
+            salida.close();
+            
+            File fileName2 = new File("Gallo.txt");
+            ObjectOutputStream salida2 = new ObjectOutputStream(new FileOutputStream(fileName2));
+            salida2.writeObject(gallo);
+            salida2.flush();
+            salida2.close();
+            
+            File fileName3 = new File("Canario.txt");
+            ObjectOutputStream salida3 = new ObjectOutputStream(new FileOutputStream(fileName3));
+            salida3.writeObject(canario);
+            salida3.flush();
+            salida3.close();
+            
+        }
+        public  ArrayList recuperarArtista() throws FileNotFoundException, IOException, ClassNotFoundException{
+            File fileName = new File("Artista.txt");
+            ObjectInputStream entrada = new ObjectInputStream( new FileInputStream(fileName) );
+            ArrayList<Artista> cantores = (ArrayList) entrada.readObject();
+            entrada.close();
+            return cantores;
+        }
+        public  ArrayList recuperarCanario() throws FileNotFoundException, IOException, ClassNotFoundException{
+            File fileName = new File("Canario.txt");
+            ObjectInputStream entrada = new ObjectInputStream( new FileInputStream(fileName) );
+            ArrayList<Canario> cantores = (ArrayList) entrada.readObject();
+            entrada.close();
+            return cantores;
+        }
+        public  ArrayList recuperarGallo() throws FileNotFoundException, IOException, ClassNotFoundException{
+            File fileName = new File("Gallo.txt");
+            ObjectInputStream entrada = new ObjectInputStream( new FileInputStream(fileName) );
+            ArrayList<Gallo> cantores = (ArrayList) entrada.readObject();
+            entrada.close();
+            return cantores;
+        }
+        
     public void exitProcedure() {
         int value = JOptionPane.showConfirmDialog(null,"Desea Cerrar El Programa?");
+        try {
+         this.guardar(artistasArray,gallosArray,canariosArray);
+        } catch (Exception e) {
+            
+        }
         if(value==0){
             this.mostrarArtistas.dispose();
             System.exit(0);
         }
     }
     public void iniciar() {
+        try {
+            artistasArray = this.recuperarArtista();
+            gallosArray =this.recuperarGallo();
+            canariosArray = this.recuperarCanario();
+        } catch (Exception e) {
+            System.out.println("tiro eror"+ e);
+        }
         
         this.mostrarArtistas.setVisible(true);
         this.mostrarArtistas.PanelDataArtista.setVisible(false);
-        
-      
         this.mostrarArtistas.ArtistasContainer.setListData(RecargarArtistas());
     }
     
@@ -283,7 +357,6 @@ public class Controlador{
             //.println("Editando Artista");
             if ("Artista".equals(tipoDeArtista)){ 
                 this.artistasArray.get(indexCantorEditandose).setValues(instrumentoNombre,instrumentoTipo,nombre,momentoCantor);
-
             }
             else if("Gallo".equals(tipoDeArtista)){
                 this.gallosArray.get(indexCantorEditandose).setValues(nombre,momentoCantor);
@@ -320,25 +393,26 @@ public class Controlador{
     public void MostrarInfoArtista(){
         indexCantorEditandose = this.mostrarArtistas.ArtistasContainer.getSelectedIndex();
         //System.out.println("/////////");
-        //System.out.println(indexCantorEditandose);
+        //System.out.println(indexCantorEditandose+"indez");
         if(indexCantorEditandose==-1) return;
         //System.out.println(tipoCantoresArray.get(indexCantorEditandose));
         
-        
-        if(tipoCantoresArray.get(indexCantorEditandose) == "Artista"){
+        System.out.println(tipoCantoresArray.get(indexCantorEditandose));
+        if("Artista".equals(tipoCantoresArray.get(indexCantorEditandose))){
             //System.out.println(indexCantorEditandose+" index cantor editandoce");
             //System.out.println(artistasArray.size()+" logitd array");
+            System.out.println("entre artist");
             this.artistaSeleccionado = this.artistasArray.get(indexCantorEditandose);
             this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
-        else if(tipoCantoresArray.get(indexCantorEditandose) == "Gallo"){
+        else if("Gallo".equals(tipoCantoresArray.get(indexCantorEditandose))){
             //System.out.println(gallosArray.size()+" logitd array");
             int index = indexCantorEditandose - this.artistasArray.size();
             //System.out.println(index+" index");
             this.galloSeleccionado = this.gallosArray.get(index);
             this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
-        else if(tipoCantoresArray.get(indexCantorEditandose) == "Canario"){
+        else if("Canario".equals(tipoCantoresArray.get(indexCantorEditandose))){
             //System.out.println(indexCantorEditandose - (this.artistasArray.size()) - (this.gallosArray.size())+" index cantor editandoce");
             int index = indexCantorEditandose - this.artistasArray.size() - this.gallosArray.size();
             //System.out.println(canariosArray.size()+" logitd array");
@@ -346,7 +420,9 @@ public class Controlador{
             this.canarioSeleccionado = this.canariosArray.get(index);
             this.tipoCantorEditandose = tipoCantoresArray.get(indexCantorEditandose);
         }
+        
         this.mostrarArtistas.Title.setText("Info de " + this.tipoCantorEditandose);
+        System.out.println(tipoCantorEditandose);
         switch(tipoCantorEditandose){
             case "Artista":
                 this.mostrarArtistas.NombreArtista.setText("Nombre: " + artistaSeleccionado.getNombre());
@@ -405,6 +481,7 @@ public class Controlador{
             tipoCantoresArray.add(this.canariosArray.get(e).getTipo());
             indexArrayList++;
         }
+       
         return arrayList;
     }
     public void EliminarArtista(){

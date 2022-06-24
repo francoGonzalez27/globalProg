@@ -5,11 +5,13 @@
  */
 package tp9_Ej2;
 
+import java.io.Serializable;
+
 /**
  *
  * @author frank
  */
-public class Momento {
+public class Momento implements Serializable{
     public String tipo;
     private boolean alegria;
 

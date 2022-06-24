@@ -2,6 +2,7 @@ package tp9_Ej2;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -17,7 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author messi
  */
-public class Instrumento {
+public class Instrumento implements Serializable{
     public String nombre;
     public String tipo;
     public Clip audioClip;

@@ -43,6 +43,7 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
         NombreArtista = new javax.swing.JLabel();
         FechaDeNacimientoArtista = new javax.swing.JLabel();
         ReproducirSon = new javax.swing.JButton();
+        CantarArtistaBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,7 +127,8 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
             }
         });
 
-        Title.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("Info Artista");
 
         InstrumentoArtista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -146,6 +148,13 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
 
         ReproducirSon.setText("Reproducir");
 
+        CantarArtistaBoton.setText("Cantar");
+        CantarArtistaBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CantarArtistaBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelDataArtistaLayout = new javax.swing.GroupLayout(PanelDataArtista);
         PanelDataArtista.setLayout(PanelDataArtistaLayout);
         PanelDataArtistaLayout.setHorizontalGroup(
@@ -162,16 +171,19 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ReproducirSon, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelDataArtistaLayout.createSequentialGroup()
-                        .addComponent(esMusicaAlegre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(esMusicaAlegre, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                         .addGap(123, 123, 123))
                     .addComponent(horario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NombreArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(PanelDataArtistaLayout.createSequentialGroup()
+                        .addComponent(NombreArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CantarArtistaBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(FechaDeNacimientoArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(PanelDataArtistaLayout.createSequentialGroup()
                 .addGap(147, 147, 147)
-                .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addComponent(Title, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelDataArtistaLayout.setVerticalGroup(
             PanelDataArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +191,9 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(Title, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NombreArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addGroup(PanelDataArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NombreArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(CantarArtistaBoton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelDataArtistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(InstrumentoArtista, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
@@ -205,7 +219,7 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(128, 128, 128)
                 .addComponent(PanelCrearArtista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,6 +247,10 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
     private void eliminarArtistaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarArtistaBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_eliminarArtistaBtnActionPerformed
+
+    private void CantarArtistaBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CantarArtistaBotonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CantarArtistaBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,6 +289,7 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JList<String> ArtistasContainer;
+    public javax.swing.JButton CantarArtistaBoton;
     public javax.swing.JLabel FechaDeNacimientoArtista;
     public javax.swing.JButton InfoArtistaBtn;
     public javax.swing.JLabel InstrumentoArtista;
@@ -278,7 +297,7 @@ public class JFrame_MostrarArtistas extends javax.swing.JFrame {
     public javax.swing.JPanel PanelCrearArtista;
     public javax.swing.JPanel PanelDataArtista;
     public javax.swing.JButton ReproducirSon;
-    private javax.swing.JLabel Title;
+    public javax.swing.JLabel Title;
     private javax.swing.ButtonGroup buttonGroup1;
     public javax.swing.JButton crearArtistaBtn;
     public javax.swing.JButton editarArtista;
